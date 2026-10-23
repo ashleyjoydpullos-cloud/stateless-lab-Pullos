@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,9 +27,13 @@ class DirectoryApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // Customization 1: Use a blue color scheme throughout the app.
       theme: ThemeData(
-        colorSchemeSeed: Colors.blue,
+        colorSchemeSeed: Colors.teal,
+        scaffoldBackgroundColor: Colors.blueGrey.shade50,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.teal.shade700,
+          foregroundColor: Colors.white,
+        ),
         useMaterial3: true,
       ),
       home: const DirectoryScreen(),
@@ -68,6 +71,12 @@ class DirectoryScreen extends StatelessWidget {
       email: 'josephk@example.com',
     ),
     Student(
+      name: 'Cyril Cabodbod',
+      course: 'BS Information Technology',
+      yearLevel: 4,
+      email: 'Cyril@gmail.com',
+    ),
+    Student(
       name: 'Josephine Lore',
       course: 'BS Computer Science',
       yearLevel: 2,
@@ -78,18 +87,13 @@ class DirectoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Campus Directory'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Campus Directory'), centerTitle: false),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           const SectionHeader(title: 'Students'),
           const SizedBox(height: 8),
-          ...students.map(
-            (student) => StudentCard(student: student),
-          ),
+          ...students.map((student) => StudentCard(student: student)),
         ],
       ),
     );
@@ -100,10 +104,7 @@ class DirectoryScreen extends StatelessWidget {
 class SectionHeader extends StatelessWidget {
   final String title;
 
-  const SectionHeader({
-    super.key,
-    required this.title,
-  });
+  const SectionHeader({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -129,24 +130,15 @@ class InfoRow extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  const InfoRow({
-    super.key,
-    required this.icon,
-    required this.text,
-  });
+  const InfoRow({super.key, required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 18),
+        Icon(icon, size: 18, color: Theme.of(context).colorScheme.primary),
         const SizedBox(width: 8),
-        Expanded(
-          child: Text(
-            text,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
+        Expanded(child: Text(text, overflow: TextOverflow.ellipsis)),
       ],
     );
   }
@@ -156,18 +148,13 @@ class InfoRow extends StatelessWidget {
 class StudentCard extends StatelessWidget {
   final Student student;
 
-  const StudentCard({
-    super.key,
-    required this.student,
-  });
+  const StudentCard({super.key, required this.student});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      // Customization 2: Give each student card rounded corners.
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       margin: const EdgeInsets.symmetric(vertical: 6),
       child: Padding(
         // Customization 3: Add comfortable spacing inside each card.
@@ -175,13 +162,12 @@ class StudentCard extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-              // Customization 4: Use a light blue avatar background.
-              backgroundColor: Colors.blue.shade100,
+              backgroundColor: Colors.teal.shade700,
               child: Text(
                 student.name[0],
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -206,10 +192,7 @@ class StudentCard extends StatelessWidget {
                     text: 'Year Level: ${student.yearLevel}',
                   ),
                   const SizedBox(height: 6),
-                  InfoRow(
-                    icon: Icons.email,
-                    text: student.email,
-                  ),
+                  InfoRow(icon: Icons.email, text: student.email),
                 ],
               ),
             ),
